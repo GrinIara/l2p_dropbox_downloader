@@ -1,7 +1,10 @@
 package de.rwth.elearning.l2p_dropbox_downloader;
 
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
@@ -23,6 +26,14 @@ public class LoginActivity extends Activity {
     }
     protected void login()
     {
+    	SharedPreferences app_preferences =	PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = app_preferences.edit();
+       	
+		PUT YOUR CREDENTIALS HERE INSTEAD OF login and pass
+		
+		editor.putString("LoginL2P", "login");
+       	editor.putString("PassL2P", "pass");
+       	editor.commit(); // Very important
         Intent i = new Intent(getBaseContext(),CourseListActivity.class);
         startActivity(i);
     }
