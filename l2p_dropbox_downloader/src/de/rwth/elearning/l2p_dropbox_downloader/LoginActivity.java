@@ -16,7 +16,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button login = (Button) findViewById(R.id.button);
+        Button login = (Button) findViewById(R.id.btn_login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,10 +29,10 @@ public class LoginActivity extends Activity {
     	SharedPreferences app_preferences =	PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = app_preferences.edit();
        	
-		PUT YOUR CREDENTIALS HERE INSTEAD OF login and pass
+		//PUT YOUR CREDENTIALS HERE INSTEAD OF login and pass
 		
-		editor.putString("LoginL2P", "login");
-       	editor.putString("PassL2P", "pass");
+		editor.putString("LoginL2P", "ep203401");
+       	editor.putString("PassL2P", "tehrantehran2");
        	editor.commit(); // Very important
         Intent i = new Intent(getBaseContext(),CourseListActivity.class);
         startActivity(i);
