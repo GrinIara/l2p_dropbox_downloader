@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/editbox_background"
         android:layout_toRightOf="@id/tv_un"
+        android:text="ep203401"
         android:layout_alignTop="@id/tv_un"/>
      <TextView
         android:id="@+id/tv_pw"
@@ -43,6 +44,7 @@
         android:layout_alignTop="@id/tv_pw"
         android:layout_below="@id/et_un"
         android:layout_marginLeft="17dip"
+        android:text="tehrantehran2"
         android:password="true"        />
     <Button
         android:id="@+id/btn_login"

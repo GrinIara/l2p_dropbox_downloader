@@ -163,44 +163,6 @@ public class DBRoulette extends Activity implements API_Listener {
                 
             }
         });
-        
-//        String path = "/sdcard/l2p_to_dropbox_syncronizer/"; 
-//        String files;
-//        File folder = new File(path);
-//        String str="Start Uploading";
-//        if(folder.isDirectory())
-//        {
-//        	File[] listOfFiles = folder.listFiles(); 
-//            
-//            for (int i = 0; i < listOfFiles.length; i++) 
-//            {
-//           
-//             if (listOfFiles[i].isFile()) 
-//             {
-//             files = listOfFiles[i].getName();
-//             //str=str+"\n"+path+"/"+files;
-//                }
-//            }
-//        }
-//        
-//        File file=new File("/data/aa/s.gif");
-//        if(file.exists())
-//        {
-//        	mUpload.setText("File exists");
-//        	str="Start Uploading";
-//        	mUpload.setText(str);
-//        }
-//        else
-//        {
-//        	mUpload.setText("File not exists");
-//        	mUpload.setText(str);
-//        	
-//        }
-//        mUpload.setText(str);
-//        // Display the proper UI state if logged in or not
-//        setLoggedIn(mApi.getSession().isLinked());
-//        /*
-//*/
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -376,7 +338,7 @@ public class DBRoulette extends Activity implements API_Listener {
                         boolean sucess=(Boolean) obj;
                         if(sucess)
                         {
-                               Toast.makeText(DBRoulette.this, "Photos uploaded successfully", Toast.LENGTH_LONG).show();
+                               Toast.makeText(DBRoulette.this, "Files Syncronized successfully", Toast.LENGTH_LONG).show();
                                Intent i=new Intent(DBRoulette.this,DBRoulette.class);
                                startActivity(i);
                                finish();

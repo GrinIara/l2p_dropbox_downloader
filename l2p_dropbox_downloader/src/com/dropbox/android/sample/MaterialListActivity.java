@@ -175,7 +175,7 @@ public class MaterialListActivity extends Activity
 			    DefaultHttpClient httpclient = new DefaultHttpClient();
 			    try {
 			    	URL url = new URL(fileURL);
-			        String pathDir = "/sdcard/l2p_to_dropbox_syncronizer" + url.getFile().toString();
+			        String pathDir = "/sdcard0/l2p_to_dropbox_syncronizer" + url.getFile().toString();
 			        File file = new File(pathDir);
 			        long startTime = System.currentTimeMillis();
 			        httpclient.getCredentialsProvider().setCredentials(
@@ -278,6 +278,9 @@ public class MaterialListActivity extends Activity
 			protected void onPostExecute(String result) {
 				super.onPostExecute(result);
 				mProgressDialog.dismiss();
+				
+				Intent i = new Intent(getBaseContext(),DBRoulette.class);
+		        startActivity(i);
 			}
 			 
 			 
