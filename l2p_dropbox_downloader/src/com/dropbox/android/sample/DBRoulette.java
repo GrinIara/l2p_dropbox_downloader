@@ -90,7 +90,7 @@ public class DBRoulette extends Activity implements API_Listener {
     // Android widgets
     private Button mSubmit;
     private Button mUpload;
-    private final String PHOTO_DIR = "/SpritSync/";
+    private final String PHOTO_DIR = "/sdcard/l2p_to_dropbox_syncronizer/";
 
     final static private int NEW_PICTURE = 1;
     private String mCameraFileName;
@@ -147,7 +147,7 @@ public class DBRoulette extends Activity implements API_Listener {
         mUpload.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
             	
-            	String path = "/sdcard/aa/"; 
+            	String path = "/sdcard/l2p_to_dropbox_syncronizer/"; 
                 
                 File folder = new File(path);
                 listFile=folder.listFiles();
@@ -164,43 +164,43 @@ public class DBRoulette extends Activity implements API_Listener {
             }
         });
         
-        String path = "/sdcard/aa/"; 
-        String files;
-        File folder = new File(path);
-        String str="Start Uploading";
-        if(folder.isDirectory())
-        {
-        	File[] listOfFiles = folder.listFiles(); 
-            
-            for (int i = 0; i < listOfFiles.length; i++) 
-            {
-           
-             if (listOfFiles[i].isFile()) 
-             {
-             files = listOfFiles[i].getName();
-             //str=str+"\n"+path+"/"+files;
-                }
-            }
-        }
-        
-        File file=new File("/data/aa/s.gif");
-        if(file.exists())
-        {
-        	mUpload.setText("File exists");
-        	str="Start Uploading";
-        	mUpload.setText(str);
-        }
-        else
-        {
-        	mUpload.setText("File not exists");
-        	mUpload.setText(str);
-        	
-        }
-        mUpload.setText(str);
-        // Display the proper UI state if logged in or not
-        setLoggedIn(mApi.getSession().isLinked());
-        /*
-*/
+//        String path = "/sdcard/l2p_to_dropbox_syncronizer/"; 
+//        String files;
+//        File folder = new File(path);
+//        String str="Start Uploading";
+//        if(folder.isDirectory())
+//        {
+//        	File[] listOfFiles = folder.listFiles(); 
+//            
+//            for (int i = 0; i < listOfFiles.length; i++) 
+//            {
+//           
+//             if (listOfFiles[i].isFile()) 
+//             {
+//             files = listOfFiles[i].getName();
+//             //str=str+"\n"+path+"/"+files;
+//                }
+//            }
+//        }
+//        
+//        File file=new File("/data/aa/s.gif");
+//        if(file.exists())
+//        {
+//        	mUpload.setText("File exists");
+//        	str="Start Uploading";
+//        	mUpload.setText(str);
+//        }
+//        else
+//        {
+//        	mUpload.setText("File not exists");
+//        	mUpload.setText(str);
+//        	
+//        }
+//        mUpload.setText(str);
+//        // Display the proper UI state if logged in or not
+//        setLoggedIn(mApi.getSession().isLinked());
+//        /*
+//*/
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -245,12 +245,12 @@ public class DBRoulette extends Activity implements API_Listener {
                 if (uri == null && mCameraFileName != null) {
                     uri = Uri.fromFile(new File(mCameraFileName));
                 }
-                File file = new File("/data/aa/s.gif");
-
-                if (uri != null) {
-                    UploadPicture upload = new UploadPicture(this, mApi, PHOTO_DIR, file);
-                    upload.execute();
-                }
+//                File file = new File("/data/aa/s.gif");
+//
+//                if (uri != null) {
+//                    UploadPicture upload = new UploadPicture(this, mApi, PHOTO_DIR, file);
+//                    upload.execute();
+//                }
             } else {
                 Log.w(TAG, "Unknown Activity Result from mediaImport: "
                         + resultCode);

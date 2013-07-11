@@ -1,5 +1,11 @@
 package com.dropbox.android.sample;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Vector;
 
@@ -19,6 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,6 +78,7 @@ public class MaterialListActivity extends Activity
 	private String password;
 	private List<MaterialItem> materials;
 	private ListView materialList;
+	private ProgressDialog mProgressDialog;
 	
     @Override  
     public void onCreate(Bundle savedInstanceState) 
@@ -78,13 +88,31 @@ public class MaterialListActivity extends Activity
         setContentView(R.layout.activity_material_list);
         
         materialList = (ListView) findViewById(R.id.materialListView);	
-		
+        //initialisation of Progress Dialog
+        mProgressDialog = new ProgressDialog(MaterialListActivity.this);
+        mProgressDialog.setMessage("Please wait until your file is downloaded");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);	
+
+        
+        
         Button login = (Button) findViewById(R.id.uploadButton);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	Intent i = new Intent(getBaseContext(),DBRoulette.class);
-                startActivity(i);
+            	//List<String> materialsChecked = null;
+            	for (MaterialItem item : materials)
+            	{
+            		if(item.isState())
+            		{
+            			//materialsChecked.add(item.getlink());
+            			new DownloadFile().execute(item.getlink());
+            		}
+				}
+            	
+            	//Intent i = new Intent(getBaseContext(),DBRoulette.class);
+                //startActivity(i);
             }
         });
         
@@ -129,6 +157,64 @@ public class MaterialListActivity extends Activity
 		}
 	}
     
+	//download task for the each file
+		private class DownloadFile extends AsyncTask<String, Integer, String>{
+
+			private static final String baseUrl = "https://www2.elearning.rwth-aachen.de";
+			@Override
+		    protected String doInBackground(String... sUrl) {
+		        try {
+		            URL url = new URL(baseUrl + sUrl[0]);
+		            URLConnection connection = url.openConnection();
+		            connection.connect();
+		            // this will be useful so that you can show a typical 0-100% progress bar
+		            int fileLength = connection.getContentLength();
+
+		            // download the file
+		            InputStream input = new BufferedInputStream(url.openStream());
+		            OutputStream output = new FileOutputStream("/sdcard/l2p_to_dropbox_syncronizer/");
+
+		            byte data[] = new byte[1024];
+		            long total = 0;
+		            int count;
+		            while ((count = input.read(data)) != -1) {
+		                total += count;
+		                // publishing the progress....
+		                publishProgress((int) (total * 100 / fileLength));
+		                output.write(data, 0, count);
+		            }
+
+		            output.flush();
+		            output.close();
+		            input.close();
+		        } catch (Exception e) {
+		        }
+		        return null;
+			}
+			
+			 @Override
+			    protected void onPreExecute() {
+			        super.onPreExecute();
+			        mProgressDialog.show();
+			    }
+
+			 @Override
+			 protected void onProgressUpdate(Integer... progress) {
+			     super.onProgressUpdate(progress);
+			     mProgressDialog.setProgress(progress[0]);
+			 }
+
+			@Override
+			protected void onPostExecute(String result) {
+				super.onPostExecute(result);
+				mProgressDialog.dismiss();
+			}
+			 
+			 
+		}
+	
+	
+	
 	private class MaterialArrayAdapter extends ArrayAdapter<MaterialItem> {
 		private static final String tag = "MaterialArrayAdapter";
 		private Context context;
@@ -157,11 +243,23 @@ public class MaterialListActivity extends Activity
 					row = inflater.inflate(R.layout.material_list_item, parent, false);
 					//Log.d(tag, "Successfully completed XML Row Inflation!");
 				}
-				MaterialItem materialitem = getItem(position);
+				final MaterialItem materialitem = getItem(position);
 				if(materialitem != null){
 					// Get reference to Buttons
 					TextView l2pnameText = (TextView)row.findViewById(R.id.materialItemTextView);
 					//Set Text and Tags
+					CheckBox cb = (CheckBox)row.findViewById(R.id.materialCheckBox);
+					cb.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+					{
+						
+						@Override
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+						{
+							// TODO Auto-generated method stub
+							materialitem.setState(isChecked);
+							
+						}
+					});
 					//We need the Tag in order to identify the button later.
 					if(l2pnameText != null){
 						l2pnameText.setText(materialitem.getName());
@@ -199,7 +297,7 @@ public class MaterialListActivity extends Activity
 		        		//Log.d("link", link);
 		        		name = row_entries[1].substring(row_entries[1].indexOf("\" title=\"")+9, row_entries[1].indexOf("\" SRC=\""));
 		        		//Log.d("name", name);
-		        		materials.add(new MaterialItem(name,link));
+		        		materials.add(new MaterialItem(name,link, false));
 		
 			        }
 		        }

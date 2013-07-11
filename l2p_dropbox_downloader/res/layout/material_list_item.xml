@@ -4,10 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/materialItemTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/materialCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/materialItemTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/materialCheckBox"
+            android:layout_alignBottom="@+id/materialCheckBox"
+            android:layout_toRightOf="@+id/materialCheckBox"
+            android:text="TextView 1232321312312312321312"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

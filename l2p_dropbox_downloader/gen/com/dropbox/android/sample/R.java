@@ -20,12 +20,13 @@ public final class R {
         public static final int CourseTextView=0x7f050000;
         public static final int auth_button=0x7f05000d;
         public static final int btn_login=0x7f050006;
-        public static final int courseItemTextView=0x7f05000f;
+        public static final int courseItemTextView=0x7f050010;
         public static final int et_pw=0x7f050005;
         public static final int et_un=0x7f050003;
         public static final int imageView1=0x7f050009;
         public static final int imageView3=0x7f050008;
         public static final int listView=0x7f050001;
+        public static final int materialCheckBox=0x7f05000f;
         public static final int materialItemTextView=0x7f05000a;
         public static final int materialListView=0x7f05000b;
         public static final int tv_error=0x7f050007;

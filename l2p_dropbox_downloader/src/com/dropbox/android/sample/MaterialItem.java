@@ -4,15 +4,15 @@ public class MaterialItem
 {
 	private String name;
 	private String link;
-
+	private boolean state; 
 	MaterialItem(){
 		
 	}
 	
-	MaterialItem(String name, String link){
+	MaterialItem(String name, String link, boolean state){
 		this.name = name;
 		this.link = link;
-	
+		this.setState(state);
 	}
 	
 	public void setName(String name){
@@ -29,5 +29,13 @@ public class MaterialItem
 	}
 	public String getlink(){
 		return this.link;
+	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
 	}
 }
