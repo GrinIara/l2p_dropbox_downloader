@@ -5,6 +5,9 @@ import java.util.Vector;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +25,45 @@ import android.widget.TextView;
 
 public class MaterialListActivity extends Activity  
 {
+    //Define some Constants we use for Dialog-creation.
+	static final int DIALOG_LOADING = 0;
+	static final int DIALOG_NO_NETWORK = 1;
+	static final int DIALOG_L2P_WRONGPASS = 2;
+	static final int DIALOG_CAMPUS_WRONGPASS = 3;
+    
+    protected Dialog onCreateDialog(int id){
+    	Dialog dialog;
+    	AlertDialog.Builder builder;
+    	switch(id) {
+    	case DIALOG_LOADING:
+    		dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    		break;
+    	case DIALOG_NO_NETWORK:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Network failure");
+    		builder.setMessage("You are not connected to any Network. To see your L2P Rooms you need a network connection.");
+    		dialog = builder.create();
+    		break;
+    	case DIALOG_L2P_WRONGPASS:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Wrong Username/Password for L2P");
+    		builder.setMessage("Please make sure you entered the right username/password. We could not verify your username and password.");
+    		dialog = builder.create();
+    		break;
+    	case DIALOG_CAMPUS_WRONGPASS:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Wrong Username/Password for Campus");
+    		builder.setMessage("Please make sure you entered the right username/password. We could not verify your username and password.");
+    		dialog = builder.create();
+    		break;
+    	default:
+    		dialog = null;
+    	}
+    	return dialog;
+    }
+    
+	
+	
     private String leanroom_url;
 	private String username;
 	private String password;
@@ -63,7 +105,7 @@ public class MaterialListActivity extends Activity
 		@Override
 		protected void onPreExecute(){
 			//Important: SHOW LOADING DIALOG
-			//showDialog(DIALOG_LOADING);
+			showDialog(DIALOG_LOADING);
 		}
 		
 		@Override
@@ -83,7 +125,7 @@ public class MaterialListActivity extends Activity
 			//Important: GET LIST OF MATERIALS, HIDE LOADING DIALOG
 	        MaterialArrayAdapter adapter = new MaterialArrayAdapter(getBaseContext(), R.layout.material_list_item, materials);
 	        materialList.setAdapter(adapter);
-	        //dismissDialog(DIALOG_LOADING);
+	        dismissDialog(DIALOG_LOADING);
 		}
 	}
     

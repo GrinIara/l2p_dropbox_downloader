@@ -5,6 +5,9 @@ import java.util.Vector;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +26,45 @@ import android.widget.TextView;
  * Created by Alex on 6/23/13.
  */
 public class CourseListActivity extends Activity {
+	//Define some Constants we use for Dialog-creation.
+	static final int DIALOG_LOADING = 0;
+	static final int DIALOG_NO_NETWORK = 1;
+	static final int DIALOG_L2P_WRONGPASS = 2;
+	static final int DIALOG_CAMPUS_WRONGPASS = 3;
+    
+    protected Dialog onCreateDialog(int id){
+    	Dialog dialog;
+    	AlertDialog.Builder builder;
+    	switch(id) {
+    	case DIALOG_LOADING:
+    		dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    		break;
+    	case DIALOG_NO_NETWORK:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Network failure");
+    		builder.setMessage("You are not connected to any Network. To see your L2P Rooms you need a network connection.");
+    		dialog = builder.create();
+    		break;
+    	case DIALOG_L2P_WRONGPASS:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Wrong Username/Password for L2P");
+    		builder.setMessage("Please make sure you entered the right username/password. We could not verify your username and password.");
+    		dialog = builder.create();
+    		break;
+    	case DIALOG_CAMPUS_WRONGPASS:
+    		builder = new AlertDialog.Builder(this);
+    		builder.setTitle("Wrong Username/Password for Campus");
+    		builder.setMessage("Please make sure you entered the right username/password. We could not verify your username and password.");
+    		dialog = builder.create();
+    		break;
+    	default:
+    		dialog = null;
+    	}
+    	return dialog;
+    }
+
+	
+	
 	private ListView listView;
 
 	private static final String l2pLink = "https://www2.elearning.rwth-aachen.de";
@@ -64,7 +106,7 @@ public class CourseListActivity extends Activity {
 		@Override
 		protected void onPreExecute(){
 			//Important: SHOW LOADING DIALOG
-			//showDialog(DIALOG_LOADING);
+			showDialog(DIALOG_LOADING);
 		}
 		
 		@Override
@@ -80,7 +122,7 @@ public class CourseListActivity extends Activity {
 	        
 	        //If Data seems ok, parse it.
 	        if(allData.length() <= 1000){
-	        	//showDialog(DIALOG_NO_NETWORK);
+	        	showDialog(DIALOG_NO_NETWORK);
 	        	l2pRooms = new Vector<LearnRoom>(0);
 	        }else{
 	        	l2pRooms = parse_HTML(allData);
@@ -99,7 +141,7 @@ public class CourseListActivity extends Activity {
 	        listView.setAdapter(adapter);
 	        
 	        //remove the loading Dialog.
-	        //dismissDialog(DIALOG_LOADING);
+	        dismissDialog(DIALOG_LOADING);
 		}
     	
     }
