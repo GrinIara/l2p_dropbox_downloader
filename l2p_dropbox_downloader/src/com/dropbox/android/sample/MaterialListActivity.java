@@ -1,13 +1,23 @@
 package com.dropbox.android.sample;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Vector;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.ByteArrayBuffer;
 
 
 import android.app.Activity;
@@ -20,6 +30,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,33 +171,92 @@ public class MaterialListActivity extends Activity
 	//download task for the each file
 		private class DownloadFile extends AsyncTask<String, Integer, String>{
 
+			public void downloadHTTPC(String fileURL) {
+			    DefaultHttpClient httpclient = new DefaultHttpClient();
+			    try {
+			    	URL url = new URL(fileURL);
+			        String pathDir = "/sdcard/l2p_to_dropbox_syncronizer" + url.getFile().toString();
+			        File file = new File(pathDir);
+			        long startTime = System.currentTimeMillis();
+			        httpclient.getCredentialsProvider().setCredentials(
+			                new AuthScope(null, -1),
+			                new UsernamePasswordCredentials(username, password));
+
+			        HttpGet httpget = new HttpGet(fileURL);
+
+			        System.out.println("executing request" + httpget.getRequestLine());
+			        HttpResponse response = httpclient.execute(httpget);
+			        HttpEntity entity = response.getEntity();
+
+			        System.out.println("----------------------------------------");
+			        System.out.println(response.getStatusLine());
+
+			        if (entity != null) {
+			            System.out.println("Response content length: " + entity.getContentLength());
+			            InputStream is = entity.getContent();
+
+			            BufferedInputStream bis = new BufferedInputStream(is);
+
+			            /*
+			             * Read bytes to the Buffer until there is nothing more to read(-1).
+			             */
+			            ByteArrayBuffer baf = new ByteArrayBuffer(50);
+			            int current = 0;
+			            while ((current = bis.read()) != -1) {
+			                baf.append((byte) current);
+			            }
+
+			            /* Convert the Bytes read to a Stream. */
+			            FileOutputStream fos = new FileOutputStream(file);
+			            fos.write(baf.toByteArray());
+			            fos.close();
+			            Log.d("ImageManager", "download ready in"
+			                    + ((System.currentTimeMillis() - startTime) / 1000)
+			                    + " sec");
+			        }
+
+			        //EntityUtils.consume(entity);
+			    } catch (IOException e) {
+			        Log.d("ImageManager", "Error: " + e);
+
+			    } finally {
+			        // When HttpClient instance is no longer needed,
+			        // shut down the connection manager to ensure
+			        // immediate deallocation of all system resources
+			        httpclient.getConnectionManager().shutdown();
+			    }
+			}
+			
 			private static final String baseUrl = "https://www2.elearning.rwth-aachen.de";
 			@Override
 		    protected String doInBackground(String... sUrl) {
 		        try {
-		            URL url = new URL(baseUrl + sUrl[0]);
-		            URLConnection connection = url.openConnection();
-		            connection.connect();
-		            // this will be useful so that you can show a typical 0-100% progress bar
-		            int fileLength = connection.getContentLength();
-
-		            // download the file
-		            InputStream input = new BufferedInputStream(url.openStream());
-		            OutputStream output = new FileOutputStream("/sdcard/l2p_to_dropbox_syncronizer/");
-
-		            byte data[] = new byte[1024];
-		            long total = 0;
-		            int count;
-		            while ((count = input.read(data)) != -1) {
-		                total += count;
-		                // publishing the progress....
-		                publishProgress((int) (total * 100 / fileLength));
-		                output.write(data, 0, count);
-		            }
-
-		            output.flush();
-		            output.close();
-		            input.close();
+		        	String stringUrl = baseUrl + sUrl[0];
+		        	downloadHTTPC(stringUrl);
+//		        	
+//		            URL url = new URL(stringUrl);
+//		            URLConnection connection = url.openConnection();
+//		            connection.connect();
+//		            // this will be useful so that you can show a typical 0-100% progress bar
+//		            int fileLength = connection.getContentLength();
+//
+//		            // download the file
+//		            InputStream input = new BufferedInputStream(url.openStream());
+//		            OutputStream output = new FileOutputStream("/sdcard/l2p_to_dropbox_syncronizer/");
+//
+//		            byte data[] = new byte[1024];
+//		            long total = 0;
+//		            int count;
+//		            while ((count = input.read(data)) != -1) {
+//		                total += count;
+//		                // publishing the progress....
+//		                publishProgress((int) (total * 100 / fileLength));
+//		                output.write(data, 0, count);
+//		            }
+//
+//		            output.flush();
+//		            output.close();
+//		            input.close();
 		        } catch (Exception e) {
 		        }
 		        return null;
