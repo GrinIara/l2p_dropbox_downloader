@@ -31,6 +31,7 @@ public class LoginActivity extends Activity {
        	
 		PUT YOUR CREDENTIALS HERE INSTEAD OF login and pass
 		
+		//Important: When you login you need to save login and pass of a user here
 		editor.putString("LoginL2P", "login");
        	editor.putString("PassL2P", "pass");
        	editor.commit(); // Very important
