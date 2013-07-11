@@ -101,13 +101,8 @@ public class DBRoulette extends Activity implements API_Listener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //mApi.getSession().startAuthentication(DBRoulette.this);
 
-        
-        
-        	
-        if (savedInstanceState != null) {
-            mCameraFileName = savedInstanceState.getString("mCameraFileName");
-        }
 
         // We create a new AuthSession so that we can use the Dropbox API.
         AndroidAuthSession session = buildSession();

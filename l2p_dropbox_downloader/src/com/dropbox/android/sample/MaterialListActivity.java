@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -175,7 +176,7 @@ public class MaterialListActivity extends Activity
 			    DefaultHttpClient httpclient = new DefaultHttpClient();
 			    try {
 			    	URL url = new URL(fileURL);
-			        String pathDir = "/sdcard0/l2p_to_dropbox_syncronizer" + url.getFile().toString();
+			        String pathDir = SDCardRoot.getPath() + "/l2p_to_dropbox_syncronizer" + url.getFile().toString();
 			        File file = new File(pathDir);
 			        long startTime = System.currentTimeMillis();
 			        httpclient.getCredentialsProvider().setCredentials(
@@ -227,6 +228,7 @@ public class MaterialListActivity extends Activity
 			    }
 			}
 			
+			private File SDCardRoot = Environment.getExternalStorageDirectory();
 			private static final String baseUrl = "https://www2.elearning.rwth-aachen.de";
 			@Override
 		    protected String doInBackground(String... sUrl) {

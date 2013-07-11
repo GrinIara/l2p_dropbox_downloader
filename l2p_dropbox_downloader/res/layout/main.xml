@@ -15,6 +15,7 @@
 	    android:id="@+id/upload"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:enabled="false"
 	    android:text="Upload!" />
 
 </LinearLayout>
