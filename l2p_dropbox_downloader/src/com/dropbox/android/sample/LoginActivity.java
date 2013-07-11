@@ -31,14 +31,10 @@ public class LoginActivity extends Activity {
        	
 		//PUT YOUR CREDENTIALS HERE INSTEAD OF login and pass
 		
-<<<<<<< HEAD:l2p_dropbox_downloader/src/de/rwth/elearning/l2p_dropbox_downloader/LoginActivity.java
 		//Important: When you login you need to save login and pass of a user here
 		editor.putString("LoginL2P", "login");
        	editor.putString("PassL2P", "pass");
-=======
-		editor.putString("LoginL2P", "ep203401");
-       	editor.putString("PassL2P", "tehrantehran2");
->>>>>>> 62faef18d84cf1aaffab845a7ed097b1b4ff424a:l2p_dropbox_downloader/src/com/dropbox/android/sample/LoginActivity.java
+
        	editor.commit(); // Very important
         Intent i = new Intent(getBaseContext(),CourseListActivity.class);
         startActivity(i);
