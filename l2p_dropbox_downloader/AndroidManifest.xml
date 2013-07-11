@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.rwth.elearning.l2p_dropbox_downloader"
+    package="com.dropbox.android.sample"
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="11" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
         <activity
-            android:name="de.rwth.elearning.l2p_dropbox_downloader.LoginActivity"
+            android:name=".DBRoulette"
+            android:configChanges="orientation|keyboard"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +26,32 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.dropbox.client2.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask" >
+            <intent-filter>
+
+                <!-- Change this to be db- followed by your app key -->
+                <data android:scheme="db-smb9e9rf0nijb5u" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="LoginActivity" >
+        </activity>
+        <activity
             android:name=".CourseListActivity"
-            android:label="CourseListActivity">
-            </activity> 
+            android:label="CourseListActivity" >
+        </activity>
         <activity
             android:name=".MaterialListActivity"
-            android:label="MaterialListActivity">
-            </activity> 
+            android:label="MaterialListActivity" >
+        </activity>
     </application>
 
 </manifest>
