@@ -26,6 +26,7 @@
 package com.dropbox.android.sample;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -161,8 +162,9 @@ public class DBRoulette extends Activity implements API_Listener {
 		back.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// This logs you out if you're logged in, or vice versa
-				Intent i = new Intent(getBaseContext(),CourseListActivity.class);
-		        startActivity(i);
+				Intent i = new Intent(getBaseContext(),
+						CourseListActivity.class);
+				startActivity(i);
 			}
 		});
 
@@ -345,6 +347,22 @@ public class DBRoulette extends Activity implements API_Listener {
 					Toast.makeText(DBRoulette.this,
 							"Files Syncronized successfully", Toast.LENGTH_LONG)
 							.show();
+
+					//mUpload = (Button) findViewById(R.id.upload);
+					//mUpload.setEnabled(false);
+					File directory = new File("/sdcard/l2p_to_dropbox_syncronizer");
+					if (directory.exists()) {
+
+						try {
+
+							delete(directory);
+
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+					}
+
 					Intent i = new Intent(DBRoulette.this, DBRoulette.class);
 					startActivity(i);
 					finish();
@@ -360,4 +378,40 @@ public class DBRoulette extends Activity implements API_Listener {
 	public void onFail(String errormessage) {
 
 	}
+	
+	public static void delete(File file)
+	    	throws IOException{
+	 
+	    	if(file.isDirectory()){
+	 
+	    		//directory is empty, then delete it
+	    		if(file.list().length==0){
+	 
+	    		   file.delete();
+	    		}else{
+	 
+	    		   //list all the directory contents
+	        	   String files[] = file.list();
+	 
+	        	   for (String temp : files) {
+	        	      //construct the file structure
+	        	      File fileDelete = new File(file, temp);
+	 
+	        	      //recursive delete
+	        	     delete(fileDelete);
+	        	   }
+	 
+	        	   //check the directory again, if empty then delete it
+	        	   if(file.list().length==0){
+	           	     //file.delete();
+	        	    
+	        	   }
+	    		}
+	 
+	    	}else{
+	    		//if file, then delete it
+	    		file.delete();
+	    		System.out.println("File is deleted : " + file.getAbsolutePath());
+	    	}
+	    }
 }
