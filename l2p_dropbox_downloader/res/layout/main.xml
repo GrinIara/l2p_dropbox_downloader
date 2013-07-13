@@ -17,6 +17,13 @@
 	    android:layout_height="wrap_content"
 	    android:enabled="false"
 	    android:text="Upload!" />
+	
+	<Button
+	    android:id="@+id/backToCourseList"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:enabled="true"
+	    android:text="Back to Course List" />
 
 </LinearLayout>
 	      
