@@ -1,3 +1,3 @@
-l2p_dropbox_downloader Commit 1 by Alex
+l2p_dropbox_downloader
 ======================
-l2p dropbox downloader from "Team Spirit" Team for the "eLearning course in RWTH-Aachen
+l2p dropbox syncronizer of "Team Spirit" Team for the "eLearning course" in RWTH-Aachen
