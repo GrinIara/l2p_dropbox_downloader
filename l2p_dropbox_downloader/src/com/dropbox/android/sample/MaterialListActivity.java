@@ -175,9 +175,21 @@ public class MaterialListActivity extends Activity
 			public void downloadHTTPC(String fileURL) {
 			    DefaultHttpClient httpclient = new DefaultHttpClient();
 			    try {
+			    	
+			    	//get a file URL
 			    	URL url = new URL(fileURL);
-			        String pathDir = SDCardRoot.getPath() + "/l2p_to_dropbox_syncronizer" + url.getFile().toString();
-			        File file = new File(pathDir);
+			    	
+			    	//get a name of the file with extension
+			    	String fileName = fileURL.substring(fileURL.lastIndexOf('/')+1, fileURL.length() );
+			    	
+			    	//standard directory for our application
+			    	File applicationDirectory = new File(SDCardRoot.getPath() + "/l2p_to_dropbox_syncronizer");
+			 
+			        if (!applicationDirectory.exists()) {
+			    		applicationDirectory.mkdirs(); //return false, if folder already exists
+			    	}
+			        
+			        File file = new File(applicationDirectory + "/" +fileName);
 			        long startTime = System.currentTimeMillis();
 			        httpclient.getCredentialsProvider().setCredentials(
 			                new AuthScope(null, -1),

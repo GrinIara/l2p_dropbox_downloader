@@ -11,18 +11,20 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
-        public static final int l2p1=0x7f020001;
-        public static final int l2p2=0x7f020002;
-        public static final int l2p3=0x7f020003;
+        public static final int folder=0x7f020000;
+        public static final int icon=0x7f020001;
+        public static final int l2p1=0x7f020002;
+        public static final int l2p2=0x7f020003;
+        public static final int l2p3=0x7f020004;
     }
     public static final class id {
         public static final int CourseTextView=0x7f050000;
         public static final int auth_button=0x7f05000d;
         public static final int btn_login=0x7f050006;
-        public static final int courseItemTextView=0x7f050010;
+        public static final int courseItemTextView=0x7f050011;
         public static final int et_pw=0x7f050005;
         public static final int et_un=0x7f050003;
+        public static final int imageFolder=0x7f050010;
         public static final int imageView1=0x7f050009;
         public static final int imageView3=0x7f050008;
         public static final int listView=0x7f050001;

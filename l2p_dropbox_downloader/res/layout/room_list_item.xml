@@ -4,10 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/courseItemTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  " />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+            
+        
+        
+        <ImageView
+    	    android:id="@+id/imageFolder"
+    	    android:layout_width="20sp"
+    	    android:layout_height="20sp"
+    	    android:layout_alignParentLeft="true"
+    	    android:layout_alignParentTop="true"
+    	    android:src="@drawable/folder" />
+        
+    	<TextView
+      	  	android:id="@+id/courseItemTextView"
+      	  	android:layout_toRightOf="@id/imageFolder"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Room Item" 
+        	android:textSize="20sp"/>
 
+    	
+
+    </RelativeLayout>
+    	
 </LinearLayout>
