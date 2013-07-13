@@ -51,7 +51,7 @@ public class MaterialListActivity extends Activity
 	static final int DIALOG_NO_NETWORK = 1;
 	static final int DIALOG_L2P_WRONGPASS = 2;
 	static final int DIALOG_CAMPUS_WRONGPASS = 3;
-    
+    private int numOfFiles=0;
     protected Dialog onCreateDialog(int id){
     	Dialog dialog;
     	AlertDialog.Builder builder;
@@ -114,6 +114,12 @@ public class MaterialListActivity extends Activity
             @Override
             public void onClick(View view) {
             	//List<String> materialsChecked = null;
+            
+            	for (MaterialItem item : materials)
+            	{
+            		if(item.isState())
+            			numOfFiles++;
+            	}
             	for (MaterialItem item : materials)
             	{
             		if(item.isState())
@@ -292,9 +298,13 @@ public class MaterialListActivity extends Activity
 			protected void onPostExecute(String result) {
 				super.onPostExecute(result);
 				mProgressDialog.dismiss();
+				numOfFiles--;
+				if(numOfFiles==0)
+				{
+					Intent i = new Intent(getBaseContext(),DBRoulette.class);
+			        startActivity(i);
+				}
 				
-				Intent i = new Intent(getBaseContext(),DBRoulette.class);
-		        startActivity(i);
 			}
 			 
 			 
