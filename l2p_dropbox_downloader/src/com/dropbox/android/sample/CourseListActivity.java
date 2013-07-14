@@ -100,6 +100,7 @@ public class CourseListActivity extends Activity {
             final LearnRoom item = (LearnRoom) parent.getItemAtPosition(position);
             String roomId = item.getlinkl2p().substring(0, item.getlinkl2p().indexOf("/information"));
             startL2pMaterialList(l2pLink+roomId+"/materials/structured/Forms/all.aspx");
+            
           }
         });
     }

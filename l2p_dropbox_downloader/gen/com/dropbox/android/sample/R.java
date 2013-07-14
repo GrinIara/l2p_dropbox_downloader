@@ -23,10 +23,11 @@ public final class R {
         public static final int login_back=0x7f020009;
         public static final int login_btn=0x7f02000a;
         public static final int logo=0x7f02000b;
-        public static final int room_bg_selector=0x7f02000c;
-        public static final int room_cell_default=0x7f02000d;
-        public static final int room_cell_highlighted=0x7f02000e;
-        public static final int table_list_title=0x7f02000f;
+        public static final int material_listcell=0x7f02000c;
+        public static final int room_bg_selector=0x7f02000d;
+        public static final int room_cell_default=0x7f02000e;
+        public static final int room_cell_highlighted=0x7f02000f;
+        public static final int table_list_title=0x7f020010;
     }
     public static final class id {
         public static final int auth_button=0x7f05000f;
@@ -42,8 +43,8 @@ public final class R {
         public static final int linearLayout1=0x7f050004;
         public static final int listView=0x7f050001;
         public static final int materialCheckBox=0x7f050012;
-        public static final int materialItemTextView=0x7f05000d;
-        public static final int materialListView=0x7f05000e;
+        public static final int materialItemTextView=0x7f05000e;
+        public static final int materialListView=0x7f05000d;
         public static final int tableRow1=0x7f050013;
         public static final int textView1=0x7f050000;
         public static final int tv_error=0x7f050002;

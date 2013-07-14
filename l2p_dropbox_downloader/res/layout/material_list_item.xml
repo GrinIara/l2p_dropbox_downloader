@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/room_cell_default"
+        android:background="@drawable/material_listcell"
         android:gravity="center" >
 
         <LinearLayout
@@ -17,9 +17,8 @@
 
             <CheckBox
                 android:id="@+id/materialCheckBox"
-                style="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColorHint="@android:color/black" />
 
