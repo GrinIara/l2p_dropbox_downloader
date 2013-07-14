@@ -26,7 +26,11 @@
 package com.dropbox.android.sample;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,14 +115,14 @@ public class DBRoulette extends Activity implements API_Listener {
 		// Basic Android widgets
 		setContentView(R.layout.main);
 		checkAppKeySetup();
-		
-		
-		
-		  num++; if (num < 2) { Intent in = new Intent(getBaseContext(),
-		  LoginActivity.class); startActivity(in); return;
-		  
-		  }
-		 
+
+		num++;
+		if (num < 2) {
+			Intent in = new Intent(getBaseContext(), LoginActivity.class);
+			startActivity(in);
+			return;
+
+		}
 
 		mSubmit = (Button) findViewById(R.id.auth_button);
 
@@ -143,6 +147,7 @@ public class DBRoulette extends Activity implements API_Listener {
 				String path = "/sdcard/l2p_to_dropbox_syncronizer/";
 
 				File folder = new File(path);
+				
 				listFile = folder.listFiles();
 				for (int i = 0; i < listFile.length; i++) {
 
@@ -166,9 +171,9 @@ public class DBRoulette extends Activity implements API_Listener {
 				startActivity(i);
 			}
 		});
-		
+
 		setLoggedIn(mApi.getSession().isLinked());
-		//checkLoggedIn();
+		// checkLoggedIn();
 
 	}
 
@@ -195,7 +200,7 @@ public class DBRoulette extends Activity implements API_Listener {
 				TokenPair tokens = session.getAccessTokenPair();
 				storeKeys(tokens.key, tokens.secret);
 				setLoggedIn(true);
-			
+
 			} catch (IllegalStateException e) {
 				showToast("Couldn't authenticate with Dropbox:"
 						+ e.getLocalizedMessage());
@@ -363,8 +368,9 @@ public class DBRoulette extends Activity implements API_Listener {
 
 					// mUpload = (Button) findViewById(R.id.upload);
 					// mUpload.setEnabled(false);
-					File directory = new File(
-							"/sdcard/l2p_to_dropbox_syncronizer");
+					File directory = new File("/sdcard/l2p_to_dropbox_syncronizer");
+					File destination = new File("/sdcard/l2p");
+					copyFiles(directory,destination);
 					if (directory.exists()) {
 
 						try {
@@ -391,6 +397,31 @@ public class DBRoulette extends Activity implements API_Listener {
 	@Override
 	public void onFail(String errormessage) {
 
+	}
+
+	public static void copyFiles(File sourceLocation, File targetLocation)
+			throws IOException {
+
+		if (sourceLocation.isDirectory()) {
+			if (!targetLocation.exists()) {
+				targetLocation.mkdir();
+			}
+			File[] files = sourceLocation.listFiles();
+			for (File file : files) {
+				InputStream in = new FileInputStream(file);
+				OutputStream out = new FileOutputStream(targetLocation + "/"
+						+ file.getName());
+
+				// Copy the bits from input stream to output stream
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+				in.close();
+				out.close();
+			}
+		}
 	}
 
 	public static void delete(File file) throws IOException {
