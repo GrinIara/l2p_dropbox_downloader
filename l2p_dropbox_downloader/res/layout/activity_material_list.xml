@@ -4,22 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/table_list_title"
+            android:gravity="center|left"
+            android:text="@string/_material_list"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/background_light"
+            android:textColorHint="@android:color/primary_text_light"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/uploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/btn_default"
+            android:text="Download" />
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/materialItemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" " />
-    
+
     <ListView
         android:id="@+id/materialListView"
         android:layout_width="match_parent"
-        android:layout_height="375dp" >
+        android:layout_height="match_parent" >
     </ListView>
-
-    <Button
-        android:id="@+id/uploadButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Download" />
 
 </LinearLayout>

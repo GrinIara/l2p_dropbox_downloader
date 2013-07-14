@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,6 +24,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         Button login = (Button) findViewById(R.id.btn_login);
         textEditUser = (EditText) findViewById(R.id.et_un);

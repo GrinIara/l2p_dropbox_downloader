@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -74,6 +75,7 @@ public class CourseListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_courselist);
         listView = (ListView) findViewById(R.id.listView);
         
