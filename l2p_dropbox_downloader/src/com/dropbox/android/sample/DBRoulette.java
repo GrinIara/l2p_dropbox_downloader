@@ -167,8 +167,8 @@ public class DBRoulette extends Activity implements API_Listener {
 			}
 		});
 		
-		checkLoggedIn();
-		
+		setLoggedIn(mApi.getSession().isLinked());
+		//checkLoggedIn();
 
 	}
 
@@ -195,7 +195,7 @@ public class DBRoulette extends Activity implements API_Listener {
 				TokenPair tokens = session.getAccessTokenPair();
 				storeKeys(tokens.key, tokens.secret);
 				setLoggedIn(true);
-				
+			
 			} catch (IllegalStateException e) {
 				showToast("Couldn't authenticate with Dropbox:"
 						+ e.getLocalizedMessage());
