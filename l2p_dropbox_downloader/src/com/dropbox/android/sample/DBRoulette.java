@@ -110,16 +110,15 @@ public class DBRoulette extends Activity implements API_Listener {
 
 		// Basic Android widgets
 		setContentView(R.layout.main);
-
-		num++;
-		if (num < 2) {
-			Intent in = new Intent(getBaseContext(), LoginActivity.class);
-			startActivity(in);
-			return;
-
-		}
-
 		checkAppKeySetup();
+		
+		
+		
+		  num++; if (num < 2) { Intent in = new Intent(getBaseContext(),
+		  LoginActivity.class); startActivity(in); return;
+		  
+		  }
+		 
 
 		mSubmit = (Button) findViewById(R.id.auth_button);
 
@@ -167,6 +166,9 @@ public class DBRoulette extends Activity implements API_Listener {
 				startActivity(i);
 			}
 		});
+		
+		setLoggedIn(mApi.getSession().isLinked());
+		//checkLoggedIn();
 
 	}
 
@@ -193,6 +195,7 @@ public class DBRoulette extends Activity implements API_Listener {
 				TokenPair tokens = session.getAccessTokenPair();
 				storeKeys(tokens.key, tokens.secret);
 				setLoggedIn(true);
+			
 			} catch (IllegalStateException e) {
 				showToast("Couldn't authenticate with Dropbox:"
 						+ e.getLocalizedMessage());
@@ -243,7 +246,17 @@ public class DBRoulette extends Activity implements API_Listener {
 	 */
 	private void setLoggedIn(boolean loggedIn) {
 		mLoggedIn = loggedIn;
-		if (loggedIn) {
+		if (mLoggedIn) {
+			mSubmit.setText("Unlink from Dropbox");
+			mUpload.setEnabled(true);
+		} else {
+			mSubmit.setText("Link with Dropbox");
+			mUpload.setEnabled(false);
+		}
+	}
+
+	public void checkLoggedIn() {
+		if (mLoggedIn) {
 			mSubmit.setText("Unlink from Dropbox");
 			mUpload.setEnabled(true);
 		} else {
@@ -348,9 +361,10 @@ public class DBRoulette extends Activity implements API_Listener {
 							"Files Syncronized successfully", Toast.LENGTH_LONG)
 							.show();
 
-					//mUpload = (Button) findViewById(R.id.upload);
-					//mUpload.setEnabled(false);
-					File directory = new File("/sdcard/l2p_to_dropbox_syncronizer");
+					// mUpload = (Button) findViewById(R.id.upload);
+					// mUpload.setEnabled(false);
+					File directory = new File(
+							"/sdcard/l2p_to_dropbox_syncronizer");
 					if (directory.exists()) {
 
 						try {
@@ -378,40 +392,39 @@ public class DBRoulette extends Activity implements API_Listener {
 	public void onFail(String errormessage) {
 
 	}
-	
-	public static void delete(File file)
-	    	throws IOException{
-	 
-	    	if(file.isDirectory()){
-	 
-	    		//directory is empty, then delete it
-	    		if(file.list().length==0){
-	 
-	    		   file.delete();
-	    		}else{
-	 
-	    		   //list all the directory contents
-	        	   String files[] = file.list();
-	 
-	        	   for (String temp : files) {
-	        	      //construct the file structure
-	        	      File fileDelete = new File(file, temp);
-	 
-	        	      //recursive delete
-	        	     delete(fileDelete);
-	        	   }
-	 
-	        	   //check the directory again, if empty then delete it
-	        	   if(file.list().length==0){
-	           	     //file.delete();
-	        	    
-	        	   }
-	    		}
-	 
-	    	}else{
-	    		//if file, then delete it
-	    		file.delete();
-	    		System.out.println("File is deleted : " + file.getAbsolutePath());
-	    	}
-	    }
+
+	public static void delete(File file) throws IOException {
+
+		if (file.isDirectory()) {
+
+			// directory is empty, then delete it
+			if (file.list().length == 0) {
+
+				file.delete();
+			} else {
+
+				// list all the directory contents
+				String files[] = file.list();
+
+				for (String temp : files) {
+					// construct the file structure
+					File fileDelete = new File(file, temp);
+
+					// recursive delete
+					delete(fileDelete);
+				}
+
+				// check the directory again, if empty then delete it
+				if (file.list().length == 0) {
+					// file.delete();
+
+				}
+			}
+
+		} else {
+			// if file, then delete it
+			file.delete();
+			System.out.println("File is deleted : " + file.getAbsolutePath());
+		}
+	}
 }
