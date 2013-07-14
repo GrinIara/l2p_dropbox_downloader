@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -107,7 +108,6 @@ public class MaterialListActivity extends Activity
         mProgressDialog.setMax(100);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);	
 
-        
         
         Button login = (Button) findViewById(R.id.uploadButton);
         login.setOnClickListener(new View.OnClickListener() {
@@ -394,7 +394,9 @@ public class MaterialListActivity extends Activity
 		        		//Log.d("link", link);
 		        		name = row_entries[1].substring(row_entries[1].indexOf("\" title=\"")+9, row_entries[1].indexOf("\" SRC=\""));
 		        		//Log.d("name", name);
-		        		materials.add(new MaterialItem(name,link, false));
+		        		
+		        		if(!name.contains("Folder"))
+		        			materials.add(new MaterialItem(name,link, false));
 		
 			        }
 		        }
